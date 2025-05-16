@@ -1,0 +1,943 @@
+ScreenManager:
+    SplashScreen:
+    MainScreen:
+    ObjRec:
+    OCR:
+    Translation:
+    QRScanner:
+    ProfileScreen:
+    LoginScreen:
+    SignupScreen:
+    HistoryScreen:
+    ColorExtraction:
+
+
+
+<SplashScreen>:
+    name: "splash"
+    MDBoxLayout:
+        orientation: 'vertical'
+        spacing: dp(20)
+        padding: dp(20)
+
+
+    MDFloatLayout:
+        # App Title
+        MDLabel:
+            text: "TinyAI"
+            font_style: "H3"
+            halign: "center"
+            pos_hint: {"center_y": 0.85}
+            bold: True
+
+        # App Icon (Replace with your actual icon)
+        Image:
+            source: "logo.png"  # Replace with your actual image file
+            size_hint: None, None
+            size: dp(120), dp(120)
+            pos_hint: {"center_x": 0.5, "center_y": 0.55}
+
+
+
+<MainScreen>:
+    name: "main"
+
+
+
+    # Bottom Navigation Panel
+    MDBottomNavigation:
+        panel_color: 0, 0, 0, 0.1
+        MDBottomNavigationItem:
+            name: 'screen 1'
+            text: 'Home'
+            icon: 'home'
+
+            BoxLayout:
+                orientation: "vertical"
+                padding: [10, 10, 10, 0]  # Left, Top, Right, Bottom
+                size_hint_y: None
+                pos_hint: {"top": 1}
+                height: "56dp"
+                md_bg_color: 0.98, 0.98, 0.98, 1  # Light background color
+
+                BoxLayout:
+                    orientation: "horizontal"
+                    spacing: "10dp"
+
+                    MDIconButton:
+                        icon: "account-circle"
+                        theme_text_color: "Custom"
+                        text_color: 0, 0, 0, 0.6  # Icon color
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        icon_size: "35sp"
+                        on_release: app.switch_to_login()
+
+                    Label:
+                        text: "TinyAI"
+                        font_size: "36sp"  # Adjust size as needed
+                        bold: True
+                        color: 0, 0, 0, 0.7  # Text color
+
+                    MDIconButton:
+                        icon: "history"
+                        theme_text_color: "Custom"
+                        text_color: 0, 0, 0, 0.6  # Icon color
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        icon_size: "35sp"
+                        on_release: app.root.get_screen("profile").check_login()
+
+
+            MDScrollView:
+                size_hint_y: 1
+                pos_hint: {"top": 0.85}  # Adjusts grid under the navigation bar
+                BoxLayout:  # Wrap everything inside a single BoxLayout
+                    orientation: "vertical"
+                    padding: dp(16)
+                    spacing: dp(8)
+                    size_hint_y: None
+                    height: self.minimum_height
+                    MDGridLayout:
+                        cols: 2  # 2 cards per row
+                        spacing: dp(16)
+                        padding: 0
+                        size_hint_x: 1
+                        adaptive_height: True
+
+                        # First Card
+                        MDCard:
+                            size_hint: None, None
+                            size: "150dp", "150dp"
+                            radius: [20,]  # Rounded corners
+                            elevation: 2
+                            md_bg_color: 0.314, 0.318, 0.310, 1
+                            on_release: app.root.current = "objrec"
+
+                            BoxLayout:
+                                orientation: 'vertical'
+                                spacing: 10
+                                padding: 10
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                                MDIcon:
+                                    icon: "magnify"
+                                    halign: "center"
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 1, 1, 1
+                                    font_size: "48sp"
+
+                                MDLabel:
+                                    text: "Object Recognition"
+                                    halign: "center"
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 1, 1, 1
+                                    font_size: "20sp"
+                                    bold: True
+
+
+                        # Second Card
+                        MDCard:
+                            size_hint: None, None
+                            size: "150dp", "150dp"
+                            radius: [20,]
+                            elevation: 2
+                            md_bg_color: 0.949, 0.373, 0.361, 1
+                            on_release: app.root.current = "ocr"
+
+                            BoxLayout:
+                                orientation: 'vertical'
+                                spacing: 10
+                                padding: 10
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                                MDIcon:
+                                    icon: "file-document-outline"
+                                    halign: "center"
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 1, 1, 1
+                                    font_size: "48sp"
+
+                                MDLabel:
+                                    text: "Image-to-Text"
+                                    halign: "center"
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 1, 1, 1
+                                    font_size: "20sp"
+                                    bold: True
+
+                        # Third Card
+                        MDCard:
+                            size_hint: None, None
+                            size: "150dp", "150dp"
+                            radius: [20,]
+                            elevation: 2
+                            md_bg_color: 1, 0.878, 0.4, 1
+                            on_release: app.root.current = "translation"
+
+                            BoxLayout:
+                                orientation: 'vertical'
+                                spacing: 10
+                                padding: 10
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                                MDIcon:
+                                    icon: "translate"
+                                    halign: "center"
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 1, 1, 1
+                                    font_size: "48sp"
+
+                                MDLabel:
+                                    text: "Translation"
+                                    halign: "center"
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 1, 1, 1
+                                    font_size: "20sp"
+                                    bold: True
+                        # Fourth Card
+                        MDCard:
+                            size_hint: None, None
+                            size: "150dp", "150dp"
+                            radius: [20,]
+                            elevation: 2
+                            md_bg_color: 0.141, 0.482, 0.627, 1
+                            on_release: app.root.current = "qrscanner"
+
+                            BoxLayout:
+                                orientation: 'vertical'
+                                spacing: 10
+                                padding: 10
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                                MDIcon:
+                                    icon: "qrcode-scan"
+                                    halign: "center"
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 1, 1, 1
+                                    font_size: "48sp"
+
+                                MDLabel:
+                                    text: "QR Scan"
+                                    halign: "center"
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 1, 1, 1
+                                    font_size: "20sp"
+                                    bold: True
+                    # Fifth Card (in a separate container to control its width)
+                    AnchorLayout:
+                        size_hint_y: None
+                        height: dp(115)  # Account for spacing
+                        anchor_x: 'left'
+                        spacing: 15
+                        padding: [0, 0, 0, 0]
+
+                        MDCard:
+                            size_hint: None, None
+                            size: "316dp", "100dp"  # Width accounts for both cards + spacing
+                            radius: [20,]
+                            elevation: 2
+                            md_bg_color: 0.439, 0.757, 0.702, 1
+                            on_release: app.root.current = "ColorExtraction"
+
+                            BoxLayout:
+                                orientation: 'horizontal'
+                                spacing: 10
+                                padding: 0,10
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                                halign: "center"
+                                valign: "center"
+
+                                MDIcon:
+                                    icon: "palette"  # Change to match the UI
+                                    valign: "top"
+                                    halign: "center"
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 1, 1, 1
+                                    font_size: "48sp"
+
+                                MDLabel:
+                                    text: "Color Extraction"
+                                    halign: "center"
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 1, 1, 1
+                                    font_size: "20sp"
+                                    bold: True
+        MDBottomNavigationItem:
+            name: 'screen 2'
+            text: 'Search'
+            icon: 'magnify'
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                padding: [10, 10, 10, 10]
+                spacing: 10
+                size_hint_y: 1  # Makes sure it fills the screen
+
+                #  Search Bar
+                MDBoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: None
+                    height: "60dp"
+                    padding: [20, 30, 20, 10]
+                    spacing: 10
+                    pos_hint: {"top": 0.8}  # Adjust this to move it lower
+
+
+                    MDTextField:
+                        id: search_input
+                        hint_text: "Image Search"
+                        size_hint_x: 0.6
+                        icon_left: "magnify"
+                        multiline: False  # Ensures single-line input
+                        on_text_validate: root.search_images()
+
+
+                    MDRaisedButton:
+                        text: "Search"
+                        size_hint_x: 0.2
+                        on_release: root.search_images()
+
+                # 🔹 Search Results
+                ScrollView:
+                    size_hint_y: 1  # Ensures it takes up the remaining space
+
+                    GridLayout:
+                        id: search_results
+                        cols: 2
+                        spacing: dp(10)
+                        size_hint_y: None
+                        height: self.minimum_height  # Expands based on content
+
+        MDBottomNavigationItem:
+            name: 'screen 3'
+            text: 'Profile'
+            icon: 'account'
+            ProfileScreen:
+
+<ProfileScreen>:
+    name: "profile"
+    username: "User Name"
+    user_email: "user@example.com"
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: dp(20)
+        spacing: dp(10)
+        MDBoxLayout:
+            orientation: "vertical"
+            spacing: dp(5)
+            padding: dp(20)
+            height: self.minimum_height
+            pos_hint: {"center_x": 0.5}
+
+            MDIcon:
+                icon: "account"
+                size_hint: None, None
+                size: dp(200), dp(200)
+                pos_hint: {"center_x": 0.5}
+
+            MDLabel:
+                id: username
+                text: root.username
+                font_style: "H5"
+                halign: "center"
+
+            MDLabel:
+                id: user_email
+                text: root.user_email
+                font_style: "Subtitle1"
+                halign: "center"
+
+        ScrollView:
+            MDList:
+                OneLineAvatarListItem:
+                    text: "Login"
+                    on_release: app.root.current = "login"
+                    IconLeftWidget:
+                        icon: "account-circle"
+                        icon_size: "30sp"
+                OneLineAvatarListItem:
+                    text: "Signup"
+                    on_release: app.root.current = "signup"
+                    IconLeftWidget:
+                        icon: "account-plus"
+                        icon_size: "30sp"
+                OneLineAvatarListItem:
+                    text: "History"
+                    on_release: root.check_login()
+                    IconLeftWidget:
+                        icon: "history"
+                        icon_size: "30sp"
+
+                OneLineAvatarListItem:
+                    text: "Logout"
+                    on_release: app.logout()
+                    IconLeftWidget:
+                        icon: "logout"
+                        icon_size: "30sp"
+
+<LoginScreen>:
+    name: "login"
+    MDTopAppBar:
+        title: "Login"
+        orientation: 'horizontal'
+        size_hint_y: None
+        pos_hint: {"top": 1}
+        height: "50dp"
+        left_action_items: [["arrow-left", lambda x: app.go_back(root.name)]]
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 50
+        spacing: 20
+        MDLabel:
+            text: "Login"
+            halign: "center"
+            theme_text_color: "Secondary"
+            font_style: "H4"
+
+        MDTextField:
+            id: username_input
+            hint_text: "Username"
+            size_hint_x: None
+            width: "300dp"
+            pos_hint: {"center_x": 0.5}
+
+        MDTextField:
+            id: password_input
+            hint_text: "Password"
+            password: True
+            size_hint_x: None
+            width: "300dp"
+            pos_hint: {"center_x": 0.5}
+
+        MDRaisedButton:
+            text: "Login"
+            size_hint: None, None
+            width: "300dp"
+            height: "50dp"
+            pos_hint: {"center_x": 0.5}
+            on_release: root.login_success(username_input.text, password_input.text)
+
+        MDRectangleFlatButton:
+            text: "Signup"
+            size_hint: None, None
+            size: "200dp", "50dp"
+            pos_hint: {"center_x": 0.5}
+            on_release: root.manager.current = "signup"
+
+
+<SignupScreen>:
+    name: "signup"
+    MDTopAppBar:
+        title: "Sign Up"
+        orientation: 'horizontal'
+        size_hint_y: None
+        pos_hint: {"top": 1}
+        height: "50dp"
+        left_action_items: [["arrow-left", lambda x: app.go_back(root.name)]]
+
+    BoxLayout:
+        orientation: "vertical"
+        spacing: 10
+        padding: 20
+
+        MDTextField:
+            id: full_name
+            hint_text: "Full Name"
+            required: True
+
+        MDTextField:
+            id: username
+            hint_text: "Username"
+            required: True
+
+        MDTextField:
+            id: email
+            hint_text: "Email"
+            helper_text: "Enter a valid email"
+            helper_text_mode: "on_focus"
+            required: True
+
+        MDTextField:
+            id: phone
+            hint_text: "Phone Number"
+            required: True
+            max_text_length: 10
+
+        MDTextField:
+            id: password
+            hint_text: "Password"
+            password: True
+            required: True
+
+        MDTextField:
+            id: confirm_password
+            hint_text: "Confirm Password"
+            password: True
+            required: True
+
+        MDRaisedButton:
+            text: "Sign Up"
+            pos_hint: {"center_x": 0.5}
+            on_release: root.signup(username.text, password.text, full_name.text, email.text, phone.text)
+
+<HistoryItem@OneLineAvatarIconListItem>:
+    icon: "history"  # Default icon if not set
+    text: ""  # Default text if not set
+
+    IconLeftWidget:
+        icon: root.icon
+
+<HistoryScreen>:
+    name: "history"
+    BoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            size_hint_y: None
+            title: "History"
+            height: "50dp"
+            pos_hint: {"top": 1}
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            left_action_items: [["arrow-left", lambda x: app.go_back(root.name)]]
+            right_action_items: [["filter", lambda x: root.show_filter_options(self)]]
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: 1
+
+            ScrollView:
+                RecycleView:
+                    id: history_list
+                    viewclass: "HistoryItem"
+                    RecycleBoxLayout:
+                        orientation: "vertical"
+                        size_hint_y: None
+                        height: self.minimum_height
+                        default_size_hint: 1, None
+
+        MDBoxLayout:
+            id: history_details_box
+            orientation: "vertical"
+            size_hint_y: None
+            height: self.minimum_height
+            padding: "10dp"
+
+
+
+<ImagePopup>:
+    size_hint: None, None
+    size: "300dp", "450dp"
+
+    BoxLayout:
+        orientation: "vertical"
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+
+            ClickableImage:
+                id: popup_image
+                size_hint: 1, None
+                height: "300dp"
+                allow_stretch: True
+                keep_ratio: True
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                fit_mode: "contain"
+
+        AnchorLayout:
+            size_hint_y: None
+            height: dp(60)
+            anchor_x: 'center'
+            anchor_y: 'center'
+            MDRaisedButton:
+                text: "Open in Browser"
+                size_hint_x: None
+                pos_hint: {"center_x": 0.5}
+                on_release: app.open_image_url(root.ids.popup_image.source)
+                elevation: 2  # Add shadow
+                font_size: "18sp"  # Larger text
+
+<ObjRec>:
+    name: "objrec"
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: dp(20)
+        padding: dp(20)
+
+    MDTopAppBar:
+        orientation: 'horizontal'
+        size_hint_y: None
+        pos_hint: {"top": 1}
+        height: "50dp"
+
+        left_action_items: [["arrow-left", lambda x: app.go_back(root.name)]]
+
+        Label:
+            text: "Object Detection"
+            size_hint: None, None
+            size: root.width - 100, 50
+            font_size: "30sp"
+            halign: 'center'
+            valign: 'middle'
+
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: dp(20)
+        padding: dp(20)
+        size_hint: 1, None
+
+        # Buttons for Capturing and Uploading Image
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "50dp"
+            spacing: dp(10)
+            pos_hint: {"center_x": 0.5}
+
+            MDRaisedButton:
+                text: "Capture Image"
+                on_release: root.capture_image()
+
+
+            MDRaisedButton:
+                text: "Upload Image"
+                on_release: root.select_image()
+
+            MDRaisedButton:
+                id: close_camera_button
+                text: "Close Camera"
+                opacity: 0  # Initially Hidden
+                disabled: True
+                on_release: root.stop_camera()
+
+        # Display Image Below Buttons
+        Image:
+            id: camera_feed
+            source: root.image_path if root.image_path else ""
+            size_hint_y: None
+            height: "250dp"
+            allow_stretch: True
+            keep_ratio: True
+
+        # Detected Object Label & Wikipedia Button
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: None
+            height: "100dp"
+            spacing: dp(10)
+            pos_hint: {"center_x": 0.5}
+
+            MDLabel:
+                text: root.detected_text
+                halign: "center"
+                theme_text_color: "Primary"
+
+            MDRaisedButton:
+                text: "Open Wikipedia"
+                pos_hint: {"center_x": 0.5}
+                on_release: root.open_wikipedia()
+                disabled: not root.wikipedia_url  # Disable if no Wikipedia link
+
+
+
+<OCR>:
+    name: "ocr"
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: dp(20)
+        padding: dp(20)
+
+    MDTopAppBar:
+        orientation: 'horizontal'
+        size_hint_y: None
+        pos_hint: {"top": 1}
+        height: "50dp"
+
+        left_action_items: [["arrow-left", lambda x: app.go_back(root.name)]]
+
+        Label:
+            text: "Image-to-Text"
+            size_hint: None, None
+            size: root.width - 100, 50
+            font_size: "30sp"
+            halign: 'center'
+            valign: 'middle'
+
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 20
+        padding: 20
+        size_hint: 1, None
+        height: self.minimum_height
+
+        # Button to select image for OCR
+        Button:
+            text: "Select Image for OCR"
+            size_hint: None, None
+            size: 250, 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.8}
+            on_press: root.select_ocr_file(self)
+
+
+
+        # TextInput to display OCR result
+        TextInput:
+            id: result_box
+            text: root.result_text
+            size_hint: None, None
+            size: 350, 300
+            pos_hint: {"center_x": 0.5}
+            multiline: True
+            readonly: True
+            hint_text: "Results will be displayed here"
+            padding: [10, 10]  # Padding inside the text input box
+            font_size: "20sp"
+            background_normal: ''  # Make it look more like a label
+            background_color: (1, 1, 1, 0.9)  # Light background color for better visibility
+
+        MDRaisedButton:
+            text: "Clear"
+            size_hint: None, None
+            size: "250dp", "50dp"
+            pos_hint: {"center_x": 0.5}
+            on_press: root.reset_text()
+
+        MDRaisedButton:
+            text: "Copy"
+            size_hint: None, None
+            size: "250dp", "50dp"
+            pos_hint: {"center_x": 0.5}
+            on_press: app.copy_text(result_box.text)
+
+
+        # Add some space between the text input and the next widgets
+        Widget:
+            size_hint_y: None
+            height: 20  # Adding some spacing for better visual separation
+
+<Translation>:
+    name: "translation"
+
+
+    MDTopAppBar:
+        orientation: 'horizontal'
+        size_hint_y: None
+        pos_hint: {"top": 1}
+        #height: "50dp"
+
+        left_action_items: [["arrow-left", lambda x: app.go_back(root.name)]]
+
+        Label:
+            text: "Translation"
+            size_hint: None, None
+            size: root.width - 100, 50
+            font_size: "30sp"
+            halign: 'center'
+            valign: 'middle'
+
+
+
+
+
+    # Updated UI Code with Improved Positioning and Styling
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: dp(10)  # Add spacing between elements
+        padding: dp(20)
+
+
+
+        # Language Selection Section
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            #height: dp(60)
+            spacing: dp(10)  # Spacing between dropdown and button
+            pos_hint: {"center_x": 0.5}
+            height: self.minimum_height  # Automatically adjust height based on children
+
+
+            MDTextField:
+                id: language_dropdown
+                hint_text: "Select Language"
+                size_hint_x: 0.9
+                readonly: True  # Prevent manual input
+                on_focus: root.open_dropdown() if self.focus else None
+
+
+        # Text Input for Translation
+        TextInput:
+            id: source_text
+            hint_text: "Enter text to translate"
+            multiline: True
+            #mode: "rectangle"  # Make it look like a bordered rectangle
+            size_hint_x: None
+            width: dp(300)
+            max_text_length: 500
+            pos_hint: {"center_x": 0.5}
+            size_hint: None, None
+            size: 350, 300
+            padding: [10, 10]  # Padding inside the text input box
+            font_size: "20sp"
+            background_normal: ''  # Make it look more like a label
+            background_color: (1, 1, 1, 0.9)  # Light background color for better visibility
+            line_color_normal: 0, 0, 0, 1  # Normal state border color (black)
+            line_color_focus: 0, 0, 1, 1  # Focused state border color (blue)
+            border_radius: [10]  # Rounded corners (in this case 10px)
+
+        # Translate Button
+        MDRaisedButton:
+            text: "Translate"
+            size_hint: None, None
+            size: dp(200), dp(50)
+            md_bg_color: app.theme_cls.primary_color
+            pos_hint: {"center_x": 0.5}
+            on_release: root.translate_text()
+
+        # Translated Text Display
+        MDTextField:
+            id: translated_text
+            hint_text: "Translated text will appear here"
+            size_hint_x: 0.9
+            mode: "rectangle"  # Make it look like a bordered rectangle
+            size_hint_x: None
+            width: dp(300)
+            height: dp(120)
+            multiline: True
+            readonly: True
+            background_normal: ''
+            background_color: (1, 1, 1, 0.9)  # Light background
+            pos_hint: {"center_x": 0.5}
+            size_hint_x: 0.9  # Adjust width
+
+        # Clear Button
+        MDRaisedButton:
+            text: "Clear"
+            size_hint: None, None
+            size: dp(200), dp(50)
+            pos_hint: {"center_x": 0.5}
+            #md_bg_color: app.theme_cls.error_color
+            on_release: root.clear_text()
+
+<QRScanner>:
+    id: qr_scanner
+    name: "qrscanner"
+    orientation: 'vertical'
+
+    MDTopAppBar:
+        orientation: 'horizontal'
+        size_hint_y: None
+        pos_hint: {"top": 1}
+        left_action_items: [["arrow-left", lambda x: app.go_back(root.name)]]
+
+        Label:
+            text: "QR Scanning"
+            size_hint: None, None
+            size: root.width - 100, 50
+            font_size: "30sp"
+            halign: 'center'
+            valign: 'middle'
+
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 10
+        padding: 20
+
+
+        Image:
+            id: qr_image
+            size_hint: None, None  # ✅ Properly define size
+            size: dp(300), dp(300)
+            pos_hint: {"center_x": 0.5}
+
+        MDLabel:
+            id: qr_text
+            text: "Scan a QR Code..."
+            size_hint_y: None
+            height: dp(40)
+            halign: "center"
+
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            Button:
+                text: "Upload QR Code"
+                on_release: root.upload_qr()
+
+            Button:
+                text: "Scan with Camera"
+                on_release: root.start_camera()
+
+        MDRaisedButton:
+            id: close_camera_button
+            text: "Close Camera"
+            size_hint: None, None
+            size: dp(200), dp(50)
+            pos_hint: {"center_x": 0.5}
+            opacity: 0  # Initially hidden
+            disabled: True
+            on_release: root.stop_camera()
+
+<ColorExtraction>
+    id: ColorExtraction
+    name: "ColorExtraction"
+    BoxLayout:
+        orientation: 'vertical'
+
+        MDTopAppBar:
+            orientation: 'horizontal'
+            size_hint_y: None
+            pos_hint: {"top": 1}
+            left_action_items: [["arrow-left", lambda x: app.go_back(root.name)]]
+
+            Label:
+                text: "Color Extraction"
+                size_hint: None, None
+                size: root.width - 100, 50
+                font_size: "30sp"
+                halign: 'center'
+                valign: 'middle'
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: dp(10)
+            padding: dp(10)
+
+            MDLabel:
+                text: "Color Palette Extraction"
+                halign: "center"
+                theme_text_color: "Primary"
+                font_style: "H5"
+
+            BoxLayout:
+                size_hint_y: None
+                height: "50dp"
+                spacing: dp(10)
+
+                MDRaisedButton:
+                    text: "Upload Image"
+                    pos_hint: {"center_x": 0.5}
+                    on_release: root.select_image()
+            Image:
+                id: image_display
+                size_hint_y: None
+                height: "300dp"
+                allow_stretch: True
+                keep_ratio: True
+
+            MDRaisedButton:
+                text: "Extract Colors"
+                pos_hint: {"center_x": 0.5}
+                on_release: root.extract_colors()
+
+            BoxLayout:
+                id: color_palette
+                size_hint_y: None
+
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: dp(60)
+
+
+
